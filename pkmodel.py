@@ -25,8 +25,13 @@ def main():
     wheel = np.loadtxt(s.wheel_path, skiprows=2)
     wheel[:,1] = - wheel[:,1] # Point z-axis upwards.
     
-    pkl.plotProfiles(rail, wheel)
+    new_wheel = pkl.equalPoints(wheel, rail)
 
+    interpen = pkl.interpenetration(new_wheel, rail,
+                                    s.virtual_penetration)
+    max_pressures = pkl.maxPressure(new_wheel, interpen,
+                                    s.wheel_radius, s.E, s.nu,
+                                    s.penetration, s.virtual_penetration)
 # End of function main.
 
 
