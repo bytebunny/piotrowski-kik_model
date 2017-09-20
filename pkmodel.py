@@ -27,7 +27,6 @@ def main():
     max_pressures = pkl.maxPressure(new_wheel, interpen,
                                     s.wheel_radius, s.E, s.nu,
                                     s.penetration, s.virtual_penetration)
-    print max_pressures
 # End of function main.
 
 
