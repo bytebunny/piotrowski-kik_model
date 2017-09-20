@@ -19,6 +19,31 @@ import matplotlib.pyplot as plt
 
 
 
+def getProfiles(rail_path='', wheel_path=''):
+    """Returns rail and wheel profiles from given paths.
+
+    If no path is given, returns empty array.
+
+    Input:
+    rail_path -- string with path to rail profile.
+    wheel_path -- string with path to wheel profile.
+
+    /Rostyslav Skrypnyk
+    """
+    rail = []
+    if rail_path:
+        rail = np.loadtxt(rail_path)
+        rail[:,1] = - rail[:,1] # Point z-axis upwards.
+    
+    wheel = []
+    if wheel_path:
+        wheel = np.loadtxt(wheel_path, skiprows=2)
+        wheel[:,1] = - wheel[:,1] # Point z-axis upwards.
+
+    return rail, wheel
+# End function getProfiles.
+
+
 def plotProfiles(profile1, profile2=[], contact_point=[]):
     """Plots profile(s).
 

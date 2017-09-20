@@ -19,12 +19,7 @@ import settings as s
 import pkmodellib as pkl
 
 def main():
-    rail = np.loadtxt(s.rail_path)
-    rail[:,1] = - rail[:,1] # Point z-axis upwards.
-
-    wheel = np.loadtxt(s.wheel_path, skiprows=2)
-    wheel[:,1] = - wheel[:,1] # Point z-axis upwards.
-    
+    rail, wheel = pkl.getProfiles(s.rail_path, s.wheel_path)
     new_wheel = pkl.equalPoints(wheel, rail)
 
     interpen = pkl.interpenetration(new_wheel, rail,
@@ -32,6 +27,7 @@ def main():
     max_pressures = pkl.maxPressure(new_wheel, interpen,
                                     s.wheel_radius, s.E, s.nu,
                                     s.penetration, s.virtual_penetration)
+    print max_pressures
 # End of function main.
 
 

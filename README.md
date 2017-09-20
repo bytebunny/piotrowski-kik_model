@@ -7,10 +7,18 @@ Python implementation of [A simplified model of wheel--rail contact mechanics fo
 
 Semi-Hertzian (semi-elliptical normal pressure distribution along the (rolling) x-axis) non-iterative
 contact solution that is particularly usefull when curvatures are not constant along the (lateral)
-y-axis. Results shown in the original article compare well with results from Kalker's variational
+y-axis. Results shown in the original article are in agreement with results from Kalker's variational
 method. However, alike Kalker's method the model is limited to elastic material response and
 geometries that permit the assumption of an infinite half-space. Additionally, both bodies
 have to possess identical material properties.
+
+## Dependencies
+
+To run the code, you will need the following libraries installed:
+
+- NumPy
+- SciPy
+- Matplotlib (for visualisation only)
 
 ## How to use
 
