@@ -11,12 +11,14 @@ the exception that the function and method names are mixedCase.
 """
 
 # Standard library imports:
-
+import sys
+sys.path.insert(0, './lib') # Add lib to path.
 # 3rd party imports:
 import numpy as np
 # local library specific imports:
 import settings as s
 import pkmodellib as pkl
+import geometry as geom
 
 def main():
     rail, wheel = pkl.getProfiles(s.rail_path, s.wheel_path)
@@ -27,6 +29,7 @@ def main():
     max_pressures = pkl.maxPressure(new_wheel, interpen,
                                     s.wheel_radius, s.E, s.nu,
                                     s.penetration, s.virtual_penetration)
+    print max_pressures
 # End of function main.
 
 

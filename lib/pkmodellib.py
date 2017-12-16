@@ -121,12 +121,12 @@ def interpenetration(wheel, rail, delta0):
     """
     sep = separationOfProfiles(wheel, rail)
 
-    interp_array = sep - delta0
+    interp_array = delta0 - sep
 
     ind = 0
     for interp in interp_array:
-        if interp < 0:
-            interp_array[ind] = - interp
+        if interp > 0:
+            interp_array[ind] = interp
         else:
             interp_array[ind] = 0
         ind += 1
@@ -157,7 +157,7 @@ def nonzeroRuns(a):
 # End of function nonzeroRuns.
 
 
-def maxPressure(wheel, g_array, r, E, nu, delta, delta0):
+def maxPressure(wheel, g_array, radius, E, nu, delta, delta0):
     """Returns array of maximum pressures for all contact patches.
 
     Each entry of the returned array is an evaluated eq. 13 in
@@ -166,7 +166,7 @@ def maxPressure(wheel, g_array, r, E, nu, delta, delta0):
     Input:
     wheel -- 2d array of coordinates of the wheel.
     g_array -- interpenetration array.
-    r -- wheel nominal rolling radius.
+    radius -- wheel nominal rolling radius.
     E -- Young's modulus.
     nu -- Poisson's ratio.
     delta -- penetration.
@@ -179,15 +179,19 @@ def maxPressure(wheel, g_array, r, E, nu, delta, delta0):
 
     # Function to compute x coordinate of the front edge of the
     # interpenetration region using in situ rolling radius:
-    x_front_edge = lambda ind: np.sqrt(2. * (r - z_array[ind]) * g_array[ind])
+    x_front_edge = lambda ind: np.sqrt(2. * radius * g_array[ind])
 
     # 1st integrand:
     f1 = lambda x,y,ind: np.sqrt(x_front_edge(ind) ** 2 - x * x) / \
-                         np.sqrt(x * x + y * y)
+                         np.sqrt(x * x + y * y + 1.e-10)
     # 2nd integrand:
     f2 = lambda x,ind: np.sqrt(x_front_edge(ind) ** 2 - x * x)
 
+    # Identify regions with positive interpenetration function:
     region_array = nonzeroRuns(g_array)
+
+    print region_array
+
     pmax_array = []
     for region in region_array:
         ind_l, ind_u = region[0], region[1]
@@ -195,10 +199,14 @@ def maxPressure(wheel, g_array, r, E, nu, delta, delta0):
         int2_f2 = 0
         for ind in range(ind_l, ind_u):
             x_f = x_front_edge(ind)
-            int2_f1 += spint.quad(lambda x: f1(x,y_array[ind],ind), - x_f, x_f)[0]
-            int2_f2 += spint.quad(lambda x: f2(x,ind), - x_f, x_f)[0]
+            int2_f1 += spint.quad(lambda x: f1(x,y_array[ind],ind),
+                                  - x_f, x_f,
+                                  limit=100)[0]
+            int2_f2 += spint.quad(lambda x: f2(x,ind),
+                                  - x_f, x_f)[0]
+
         load = coef / int2_f1 * int2_f2
-        pmax = load * np.sqrt(2. * r * delta0) / int2_f2
+        pmax = load * np.sqrt(2. * radius * delta0) / int2_f2
         pmax_array.append(pmax)
             
     return np.array(pmax_array)

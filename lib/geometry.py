@@ -56,7 +56,7 @@ def circularArcPoints(radius, n_points=100, distance=None,
         # Offset if orientation_down is True:
         coords.append( (x, y + 0.5*(sign - 1)*(offset_y - radius)) )
 
-    return coords
+    return np.array(coords)
 
 # End of circularArcPoints function.
 
@@ -108,7 +108,7 @@ def ellipticArcPoints(x_axis, y_axis, n_points=100, distance=None,
         y = sign * y_axis * math.sqrt( 1 - (x/x_axis)**2 )
         coords.append( (x, y + 0.5*(sign - 1)*(offset_y - y_axis)) )
 
-    return coords
+    return np.array(coords)
 # End of ellipticArcPoints function.
 
 
