@@ -190,8 +190,6 @@ def maxPressure(wheel, g_array, radius, E, nu, delta, delta0):
     # Identify regions with positive interpenetration function:
     region_array = nonzeroRuns(g_array)
 
-    print region_array
-
     pmax_array = []
     for region in region_array:
         ind_l, ind_u = region[0], region[1]
