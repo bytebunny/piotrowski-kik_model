@@ -11,8 +11,9 @@ the exception that the function and method names are mixedCase.
 """
 
 # Standard library imports:
+import os
 import sys
-sys.path.insert(0, './lib') # Add lib to path.
+sys.path.insert(0, os.path.abspath('./lib')) # Add lib to path.
 # 3rd party imports:
 import numpy as np
 # local library specific imports:

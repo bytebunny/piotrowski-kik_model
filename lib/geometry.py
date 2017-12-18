@@ -1,11 +1,12 @@
 """Library of routines to generate geometries of bodies in contact.
 
-Convention.
-In the following code the adopted naming convention is the one of PEP 8
-(see https://www.python.org/dev/peps/pep-0008/#naming-conventions) with
-the exception that the function and method names are mixedCase. 
+In the following code the adopted naming convention is the one of
+`PEP 8 <https://www.python.org/dev/peps/pep-0008/#naming-conventions>`_
+with the exception that the function and method names are mixedCase. 
 
-/Rostyslav Skrypnyk
+.. module:: geometry
+
+.. moduleauthor:: Rostyslav Skrypnyk
 """
 
 # Standard library imports:
@@ -28,9 +29,7 @@ def circularArcPoints(radius, n_points=100, distance=None,
     orientation_down -- orientation of the arc. Boolean (default: True).
     offset_y -- offset of Y coordinates, [in units of the coordinates]. Used
                 for the wheel coordinates and equals to the wheel's radius.
-                Default: 0.
-
-    /Rostyslav Skrypnyk
+                Default: 0.    
     """
     if distance is None:
         distance = float(radius)
@@ -75,9 +74,7 @@ def ellipticArcPoints(x_axis, y_axis, n_points=100, distance=None,
     orientation_down -- orientation of the arc. Boolean (default: True).
     offset_y -- offset of Y coordinates, [in units of the coordinates]. Used
                 for the wheel coordinates and equals to the wheel's radius.
-                Default: 0.
-
-    /Rostyslav Skrypnyk
+                Default: 0.    
     """
     if distance is None:
         distance = float(x_axis)
@@ -118,8 +115,6 @@ def rotateGeometry(geometry, angle):
     Input:
     geometry -- list of X,Y pairs.
     angle -- angle of rotation in degrees.
-
-    /Rostyslav Skrypnyk
     """
     theta = (angle/180.) * np.pi
     rotation_matrix = np.array( [[np.cos(theta), -np.sin(theta)],

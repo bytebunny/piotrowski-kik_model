@@ -1,11 +1,12 @@
 """Library of routines for Piotrowski-Kik contact model.
 
-Convention.
-In the following code the adopted naming convention is the one of PEP 8
-(see https://www.python.org/dev/peps/pep-0008/#naming-conventions) with
-the exception that the function and method names are mixedCase. 
+In the following code the adopted naming convention is the one of
+`PEP 8 <https://www.python.org/dev/peps/pep-0008/#naming-conventions>`_
+with the exception that the function and method names are mixedCase. 
 
-/Rostyslav Skrypnyk
+.. module:: pkmodellib
+
+.. moduleauthor:: Rostyslav Skrypnyk
 """
 
 # Standard library imports:
@@ -27,8 +28,6 @@ def getProfiles(rail_path='', wheel_path=''):
     Input:
     rail_path -- string with path to rail profile.
     wheel_path -- string with path to wheel profile.
-
-    /Rostyslav Skrypnyk
     """
     rail = []
     if rail_path:
@@ -50,8 +49,6 @@ def plotProfiles(profile1, profile2=[], contact_point=[]):
     Input:
     profile1 -- 2d array of coordinates in solid blue.
     profile2 (optional) -- 2d array of coordinates in dashed red.
-
-    /Rostyslav Skrypnyk
     """
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -72,13 +69,19 @@ def plotProfiles(profile1, profile2=[], contact_point=[]):
 
 
 def equalPoints(profile1, profile2):
-    """Returns interpolated profile1 with same number of points as in profile2.
+    """Interpolate *profile1* with same number of points as in *profile2*.
 
-    Input:
-    profile1 --  2d array of coordinates to be modified.
-    profile2 --  reference 2d array of coordinates.
+    Parameters
+    ----------
+    profile1 : 2d array
+        coordinates to be modified.
+    profile2 : 2d array
+        reference coordinates.
 
-    /Rostyslav Skrypnyk
+    Returns
+    -------
+    2d array
+        interpolated profile.
     """
     itp = spi.interp1d(profile1[:,0], profile1[:,1], kind='linear')
 
@@ -95,8 +98,6 @@ def separationOfProfiles(wheel, rail):
     Input:
     wheel --  2d array of coordinates.
     rail --  2d array of coordinates.
-
-    /Rostyslav Skrypnyk
     """
     sep = wheel[:,1] - rail[:,1]
 
@@ -116,8 +117,6 @@ def interpenetration(wheel, rail, delta0):
     wheel -- 2d array of coordinates.
     rail -- 2d array of coordinates.
     delta0 - virtual penetration.
-
-    /Rostyslav Skrypnyk
     """
     sep = separationOfProfiles(wheel, rail)
 
@@ -144,9 +143,7 @@ def nonzeroRuns(a):
     the range function works.
 
     Input:
-    a -- 1d array.
-
-    /Rostyslav Skrypnyk
+    a -- 1d array.    
     """
     # Create an array that's 1 where a isn't 0, and pad each end with an extra 0.
     notzero = np.concatenate(([0], np.not_equal(a, 0).view(np.int8), [0]))
@@ -171,8 +168,6 @@ def maxPressure(wheel, g_array, radius, E, nu, delta, delta0):
     nu -- Poisson's ratio.
     delta -- penetration.
     delta0 -- virtual penetration.
-
-    /Rostyslav Skrypnyk
     """
     y_array, z_array = wheel[:,0], wheel[:,1]
     coef = 0.5 * np.pi * E * delta / (1. - nu * nu)
