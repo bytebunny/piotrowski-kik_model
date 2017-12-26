@@ -15,6 +15,20 @@ Documentation of pkmodel
 Objects
 =======
 
+pkmodel.py
+-------------
+.. automodule:: pkmodel
+   :members:
+   :undoc-members:
+
+
+settings.py
+-------------
+.. automodule:: settings
+   :members:
+   :undoc-members:
+
+
 pkmodellib.py
 -------------
 .. automodule:: pkmodellib

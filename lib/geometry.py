@@ -18,18 +18,29 @@ import numpy as np
 
 def circularArcPoints(radius, n_points=100, distance=None,
                       orientation_down=True, offset_y=0):
-    """Returns a list of tuples with coordinates of the circular arc.
+    """Compute coordinates of the circular arc.
 
-    Input:
-    radius -- radius of the circle.
-    n_points -- number of points that constitute the arc (default=100).
-    distance -- half a span of the arc, i.e. the arc is created on the
-                interval [-distance, distance] (default: None, which is later 
-                substituted with radius).
-    orientation_down -- orientation of the arc. Boolean (default: True).
-    offset_y -- offset of Y coordinates, [in units of the coordinates]. Used
-                for the wheel coordinates and equals to the wheel's radius.
-                Default: 0.    
+    Parameters
+    ----------
+    radius : float
+        radius of the circle.
+    n_points : integer
+        number of points that constitute the arc (default=100).
+    distance : float
+        half a span of the arc, i.e. the arc is created on the
+        interval [-distance, distance] (default: None, which is later 
+        substituted with radius).
+    orientation_down : boolean
+        orientation of the arc (default: True).
+    offset_y : float 
+        offset of Y coordinates, [in units of the coordinates]. Used
+        for the wheel coordinates and equals to the wheel's radius 
+        (default: 0).
+    
+    Returns
+    -------
+    2d array
+        coordinates of circular arc.
     """
     if distance is None:
         distance = float(radius)
@@ -62,19 +73,31 @@ def circularArcPoints(radius, n_points=100, distance=None,
 
 def ellipticArcPoints(x_axis, y_axis, n_points=100, distance=None,
                       orientation_down=True, offset_y=0):
-    """Returns a list of tuples with coordinates of the elliptic arc.
+    """Compute coordinates of the elliptic arc.
 
-    Input:
-    x_axis -- size of the semi-axis along X.
-    y_axis -- size of the semi-axis along Y.
-    n_points -- number of points that constitute the arc.
-    distance -- half a span of the arc, i.e. the arc is created on the
-                interval [-distance, distance] (default: None, which is later 
-                substituted with size of the X semi-axis).
-    orientation_down -- orientation of the arc. Boolean (default: True).
-    offset_y -- offset of Y coordinates, [in units of the coordinates]. Used
-                for the wheel coordinates and equals to the wheel's radius.
-                Default: 0.    
+    Parameters
+    ----------
+    x_axis : float
+        size of the semi-axis along X.
+    y_axis : float
+        size of the semi-axis along Y.
+    n_points : integer
+        number of points that constitute the arc.
+    distance : float
+        half a span of the arc, i.e. the arc is created on the
+        interval [-distance, distance] (default: None, which is later 
+        substituted with size of the X semi-axis).
+    orientation_down : boolean
+        orientation of the arc (default: True).
+    offset_y : float
+        offset of Y coordinates, [in units of the coordinates]. Used
+        for the wheel coordinates and equals to the wheel's radius 
+        (default: 0).
+
+    Returns
+    -------
+    2d array
+        coordinates of the elliptic arc.
     """
     if distance is None:
         distance = float(x_axis)
@@ -110,11 +133,19 @@ def ellipticArcPoints(x_axis, y_axis, n_points=100, distance=None,
 
 
 def rotateGeometry(geometry, angle):
-    """Returns rotated geometry.
+    """Rotate geometry by the specified angle.
 
-    Input:
-    geometry -- list of X,Y pairs.
-    angle -- angle of rotation in degrees.
+    Parameters
+    ----------
+    geometry : 2d array
+        coordinates.
+    angle : float 
+        angle of rotation in degrees.
+
+    Returns
+    -------
+    2d array
+        rotated geometry.
     """
     theta = (angle/180.) * np.pi
     rotation_matrix = np.array( [[np.cos(theta), -np.sin(theta)],

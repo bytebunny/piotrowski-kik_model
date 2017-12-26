@@ -21,13 +21,23 @@ import matplotlib.pyplot as plt
 
 
 def getProfiles(rail_path='', wheel_path=''):
-    """Returns rail and wheel profiles from given paths.
+    """Returns rail and wheel profiles from given paths with Z-axis upwards.
 
     If no path is given, returns empty array.
 
-    Input:
-    rail_path -- string with path to rail profile.
-    wheel_path -- string with path to wheel profile.
+    Parameters
+    ----------
+    rail_path : string
+        path to rail profile.
+    wheel_path : string
+        path to wheel profile.
+
+    Returns
+    -------
+    2d array
+        rail profile.
+    2d array
+        wheel profile.
     """
     rail = []
     if rail_path:
@@ -44,11 +54,14 @@ def getProfiles(rail_path='', wheel_path=''):
 
 
 def plotProfiles(profile1, profile2=[], contact_point=[]):
-    """Plots profile(s).
+    """Plot profile(s).
 
-    Input:
-    profile1 -- 2d array of coordinates in solid blue.
-    profile2 (optional) -- 2d array of coordinates in dashed red.
+    Parameters
+    ----------
+    profile1 : 2d array
+         coordinates in solid blue.
+    [profile2] : 2d array
+         coordinates in dashed red.
     """
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -90,14 +103,22 @@ def equalPoints(profile1, profile2):
 
 
 def separationOfProfiles(wheel, rail):
-    """Returns distance between points of two profiles f(y).
+    """Compute distance between points of two profiles f(y).
 
     Profiles need to be defined in a common coordinate system. The top profile
     (wheel) needs to be the first one in the list of arguments.
 
-    Input:
-    wheel --  2d array of coordinates.
-    rail --  2d array of coordinates.
+    Parameters
+    ----------
+    wheel : 2d array
+        coordinates of the top profile.
+    rail : 2d array
+        coordinates of the bottom profile.
+
+    Returns
+    -------
+    1d array
+        distance between points of the two profiles.
     """
     sep = wheel[:,1] - rail[:,1]
 
@@ -109,14 +130,23 @@ def separationOfProfiles(wheel, rail):
 
 
 def interpenetration(wheel, rail, delta0):
-    """Returns values interpenetration function.
+    """Compute interpenetration function.
 
     The interpenetration function is defined by eq. 7 in the original article.
 
-    Input:
-    wheel -- 2d array of coordinates.
-    rail -- 2d array of coordinates.
-    delta0 - virtual penetration.
+    Parameters
+    ----------
+    wheel : 2d array
+        coordinates of the wheel profile.
+    rail : 2d array
+        coordinates of the rail profile.
+    delta0 : float 
+        virtual penetration.
+
+    Returns
+    -------
+    1d array
+        values of interpenetration function.
     """
     sep = separationOfProfiles(wheel, rail)
 
@@ -142,8 +172,15 @@ def nonzeroRuns(a):
     This indexing pattern matches, for example, how slicing works and how
     the range function works.
 
-    Input:
-    a -- 1d array.    
+    Parameters
+    ----------
+    a : 1d array
+        input.
+
+    Returns
+    -------
+    2d array
+        output.
     """
     # Create an array that's 1 where a isn't 0, and pad each end with an extra 0.
     notzero = np.concatenate(([0], np.not_equal(a, 0).view(np.int8), [0]))
@@ -155,19 +192,32 @@ def nonzeroRuns(a):
 
 
 def maxPressure(wheel, g_array, radius, E, nu, delta, delta0):
-    """Returns array of maximum pressures for all contact patches.
+    """Compute maximum pressures for all contact patches.
 
     Each entry of the returned array is an evaluated eq. 13 in
     the original article.
 
-    Input:
-    wheel -- 2d array of coordinates of the wheel.
-    g_array -- interpenetration array.
-    radius -- wheel nominal rolling radius.
-    E -- Young's modulus.
-    nu -- Poisson's ratio.
-    delta -- penetration.
-    delta0 -- virtual penetration.
+    Parameters
+    ----------
+    wheel : 2d array
+        coordinates of the wheel.
+    g_array : 1d array
+        interpenetration array.
+    radius : float
+        wheel nominal rolling radius.
+    E : float
+        Young's modulus.
+    nu : float 
+        Poisson's ratio.
+    delta : float
+        penetration.
+    delta0 : float
+        virtual penetration.
+
+    Returns
+    -------
+    1d array
+        array of maximum contact pressures for each contact patch.
     """
     y_array, z_array = wheel[:,0], wheel[:,1]
     coef = 0.5 * np.pi * E * delta / (1. - nu * nu)

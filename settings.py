@@ -1,11 +1,12 @@
 """Settings and parameters associated with implementation of the model.
 
-Convention.
-In the following code the adopted naming convention is the one of PEP 8
-(see https://www.python.org/dev/peps/pep-0008/#naming-conventions) with
-the exception that the function and method names are mixedCase. 
+In the following code the adopted naming convention is the one of
+`PEP 8 <https://www.python.org/dev/peps/pep-0008/#naming-conventions>`_
+with the exception that the function and method names are mixedCase. 
 
-/Rostyslav Skrypnyk
+.. module:: settings
+
+.. moduleauthor:: Rostyslav Skrypnyk
 """
 
 # Standard library imports:
